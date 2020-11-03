@@ -1,3 +1,4 @@
+import javax.swing.JOptionPane;
 
 public class VentanaInicio extends javax.swing.JFrame {
 
@@ -75,13 +76,19 @@ public class VentanaInicio extends javax.swing.JFrame {
     }// </editor-fold>
 
     private void botonHostActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
         new VentanaJuego().setVisible(true);
         this.dispose();
     }
 
     private void botonClienteActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        if(puertoEnUSo == 40000){ //ARREGLAR
+            JOptionPane.showMessageDialog(null, "No hay un host al cual conectarse, inice como host");
+        }else{
+            String ip = JOptionPane.showInputDialog("Ingrese el ip: ");
+            String puerto = JOptionPane.showInputDialog("Ingrese el puerto: ");
+            new VentanaJuego().setVisible(true);
+            this.dispose();
+        }
     }
 
     /**
