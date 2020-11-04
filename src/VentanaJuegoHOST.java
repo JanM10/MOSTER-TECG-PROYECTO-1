@@ -10,6 +10,7 @@ public class VentanaJuegoHOST extends javax.swing.JFrame implements Observer {
     public VentanaJuegoHOST() {
 
         initComponents();
+        this.getRootPane().setDefaultButton(this.jButton1);
         Servidor s = new Servidor(5000);
         s.addObserver(this);
         Thread t = new Thread(s);
@@ -108,6 +109,13 @@ public class VentanaJuegoHOST extends javax.swing.JFrame implements Observer {
     }// </editor-fold>
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
+//        String mensaje = "1: " + this.textoEnviar1.getText() + "\n";
+//
+//        this.txtTexto1.append(mensaje);
+//
+//        Cliente c = new Cliente(6000, mensaje);
+//        Thread t = new Thread(c);
+//        t.start();
         quitarVida(vida.getText());
         manaAlInicio(mana.getText());
     }
@@ -175,6 +183,8 @@ public class VentanaJuegoHOST extends javax.swing.JFrame implements Observer {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel mana;
     private javax.swing.JLabel vida;
+    private javax.swing.JTextField textoEnviar1;
+    private javax.swing.JTextArea txtTexto1;
 
     @Override
     public void update(Observable o, Object arg) {
