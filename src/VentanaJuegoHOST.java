@@ -10,7 +10,7 @@ public class VentanaJuegoHOST extends javax.swing.JFrame implements Observer {
     public VentanaJuegoHOST() {
 
         initComponents();
-        this.getRootPane().setDefaultButton(this.jButton1);
+        this.getRootPane().setDefaultButton(this.enviarBoton);
         Servidor s = new Servidor(5000);
         s.addObserver(this);
         Thread t = new Thread(s);
@@ -27,11 +27,14 @@ public class VentanaJuegoHOST extends javax.swing.JFrame implements Observer {
 
         jLabel1 = new javax.swing.JLabel();
         vida = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        enviarBoton = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         mana = new javax.swing.JLabel();
-        JLabel jLabel3 = new JLabel();
-        JLabel miPuerto = new JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        miPuerto = new javax.swing.JLabel();
+        textoEnviar1 = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtTexto1 = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -41,11 +44,11 @@ public class VentanaJuegoHOST extends javax.swing.JFrame implements Observer {
         vida.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         vida.setText("1000");
 
-        jButton1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        jButton1.setText("Quitar Vida");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        enviarBoton.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        enviarBoton.setText("ENVIAR");
+        enviarBoton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                enviarBotonActionPerformed(evt);
             }
         });
 
@@ -61,29 +64,43 @@ public class VentanaJuegoHOST extends javax.swing.JFrame implements Observer {
         miPuerto.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         miPuerto.setText("40000");
 
+        textoEnviar1.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+
+        txtTexto1.setEditable(false);
+        txtTexto1.setColumns(20);
+        txtTexto1.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        txtTexto1.setRows(5);
+        jScrollPane1.setViewportView(txtTexto1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(miPuerto, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(231, 231, 231)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(layout.createSequentialGroup()
-                                                .addGap(69, 69, 69)
-                                                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE)
+                                                .addComponent(jLabel3)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(miPuerto, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 473, Short.MAX_VALUE)
+                                                .addComponent(jLabel2)
                                                 .addGap(18, 18, 18)
                                                 .addComponent(mana, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(18, 18, 18)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                                 .addComponent(jLabel1)
                                                 .addGap(18, 18, 18)
-                                                .addComponent(vida, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addContainerGap())))
+                                                .addComponent(vida, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addContainerGap())
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                .addGap(0, 0, Short.MAX_VALUE)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                        .addGroup(layout.createSequentialGroup()
+                                                                .addComponent(textoEnviar1)
+                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                .addComponent(enviarBoton, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 390, Short.MAX_VALUE))
+                                                .addGap(207, 207, 207))))
         );
         layout.setVerticalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -99,23 +116,27 @@ public class VentanaJuegoHOST extends javax.swing.JFrame implements Observer {
                                                         .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                         .addComponent(mana, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                         .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                                .addGap(175, 175, 175)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(211, Short.MAX_VALUE))
+                                .addGap(59, 59, 59)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(enviarBoton, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                                        .addComponent(textoEnviar1, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE))
+                                .addContainerGap(210, Short.MAX_VALUE))
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
-//        String mensaje = "1: " + this.textoEnviar1.getText() + "\n";
-//
-//        this.txtTexto1.append(mensaje);
-//
-//        Cliente c = new Cliente(6000, mensaje);
-//        Thread t = new Thread(c);
-//        t.start();
+    private void enviarBotonActionPerformed(java.awt.event.ActionEvent evt) {
+        String mensaje = "1: " + this.textoEnviar1.getText() + "\n";
+
+        this.txtTexto1.append(mensaje);
+
+        Cliente c = new Cliente(6000, mensaje);
+        Thread t = new Thread(c);
+        t.start();
         quitarVida(vida.getText());
         manaAlInicio(mana.getText());
     }
@@ -178,18 +199,21 @@ public class VentanaJuegoHOST extends javax.swing.JFrame implements Observer {
     }
 
     // Variables declaration - do not modify
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton enviarBoton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel mana;
-    private javax.swing.JLabel vida;
+    private javax.swing.JLabel miPuerto;
     private javax.swing.JTextField textoEnviar1;
     private javax.swing.JTextArea txtTexto1;
+    private javax.swing.JLabel vida;
 
     @Override
     public void update(Observable o, Object arg) {
 
-        System.out.println(arg);
+        this.txtTexto1.append((String) arg);
     }
     // End of variables declaration
 }
