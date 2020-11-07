@@ -2,10 +2,7 @@ import java.util.Observable;
 import java.util.Observer;
 import javax.swing.ImageIcon;
 
-/**
- *
- * @author jmars
- */
+
 public class VentanaJuegoHOST extends javax.swing.JFrame implements Observer {
 
     /**
@@ -316,6 +313,10 @@ public class VentanaJuegoHOST extends javax.swing.JFrame implements Observer {
         pack();
     }// </editor-fold>                        
 
+    /**
+     * Se le resta uno a la variable para cambiar la carta actual a la anterior
+     * @param evt
+     */
     private void anteriorBotonActionPerformed(java.awt.event.ActionEvent evt) {
         numeroCarta -= 1;
         System.out.println("EL NUMERO DISMINUYO");
@@ -326,6 +327,10 @@ public class VentanaJuegoHOST extends javax.swing.JFrame implements Observer {
         }
     }
 
+    /**
+     * Se le suma uno a la variable para cambiar la carta actual a la siguente
+     * @param evt
+     */
     private void siguenteBotonActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
         numeroCarta += 1;
@@ -343,42 +348,65 @@ public class VentanaJuegoHOST extends javax.swing.JFrame implements Observer {
 
     }
 
+    /**
+     * Se agrega una carta en el label carta1
+     * @param evt
+     */
     private void Agregar1ActionPerformed(java.awt.event.ActionEvent evt) {
         miMano.setIcon(new ImageIcon(getClass().getResource("")));
         carta1.setIcon(new ImageIcon(getClass().getResource("Cartas/1.jpg")));
 
-//        Cliente c = new Cliente(6000, mensaje);
-//        Thread t = new Thread(c);
-//        t.start();
-        //String mensaje = this.textoEnviar1.getText();
-
     }
 
+    /**
+     * Se agrega una carta en el label carta2
+     * @param evt
+     */
     private void Agregar2ActionPerformed(java.awt.event.ActionEvent evt) {
         miMano.setIcon(new ImageIcon(getClass().getResource("")));
         carta2.setIcon(new ImageIcon(getClass().getResource("Cartas/1.jpg")));
 
     }
 
+    /**
+     * Se agrega una carta en el label carta3
+     * @param evt
+     */
     private void Agregar3ActionPerformed(java.awt.event.ActionEvent evt) {
         miMano.setIcon(new ImageIcon(getClass().getResource("")));
         carta3.setIcon(new ImageIcon(getClass().getResource("Cartas/1.jpg")));
     }
 
+    /**
+     * Se agrega una carta en el label carta4
+     * @param evt
+     */
     private void Agregar4ActionPerformed(java.awt.event.ActionEvent evt) {
         miMano.setIcon(new ImageIcon(getClass().getResource("")));
         carta4.setIcon(new ImageIcon(getClass().getResource("Cartas/1.jpg")));
     }
 
+    /**
+     * Se agrega una carta en el label carta5
+     * @param evt
+     */
     private void Agregar5ActionPerformed(java.awt.event.ActionEvent evt) {
         miMano.setIcon(new ImageIcon(getClass().getResource("")));
         carta5.setIcon(new ImageIcon(getClass().getResource("Cartas/1.jpg")));
     }
 
+    /**
+     * Saca una carta de la pila y la agrega a miMano
+     * @param evt
+     */
     private void sacarCartaActionPerformed(java.awt.event.ActionEvent evt) {
 
     }
 
+    /**
+     * Al precionar este boton el jugador termina su ronda y los botones se deshabilitan
+     * @param evt
+     */
     private void terminarRondaActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
         String mensaje = String.valueOf(numeroCarta);
@@ -472,6 +500,11 @@ public class VentanaJuegoHOST extends javax.swing.JFrame implements Observer {
     private javax.swing.JLabel vida;
     // End of variables declaration                   
 
+    /**
+     * El observable espera a que llegue un mensaje(carta) y la coloca donde debe.
+     * @param o
+     * @param arg
+     */
     @Override
     public void update(Observable o, Object arg) {
         this.txtTexto1.append((String) arg);

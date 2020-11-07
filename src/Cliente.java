@@ -11,6 +11,11 @@ public class Cliente implements Runnable{
     private int puerto;
     private String mensaje;
 
+    /**
+     * Utiliza el puerto pre establecido y el mensaje escrito enviado por el cleinte osea la carta seleccionada.
+     * @param puerto
+     * @param mensaje
+     */
     public Cliente(int puerto, String mensaje){
         this.puerto = puerto;
         this.mensaje = mensaje;

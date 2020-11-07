@@ -8,6 +8,13 @@ public class NodoDoble {
     }
 
     //Constructor para cuadno ya hay nodos
+
+    /**
+     * Aqui viene el elemento anterior y el siguente.
+     * @param el
+     * @param s
+     * @param a
+     */
     public NodoDoble(int el, NodoDoble s, NodoDoble a){
         dato = el;
         siguente = s;

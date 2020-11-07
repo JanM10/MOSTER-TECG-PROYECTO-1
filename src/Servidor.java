@@ -11,6 +11,10 @@ public class Servidor extends Observable implements Runnable{
 
     private int puerto;
 
+    /**
+     * Utiliza el puerto introduzido para mandar mesnsajes a traves de el.
+     * @param puerto
+     */
     public Servidor(int puerto){
         this.puerto = puerto;
     }
@@ -44,7 +48,7 @@ public class Servidor extends Observable implements Runnable{
                 this.clearChanged();
 
                 sc.close();
-                System.out.println("Cliente desconectado");
+                //System.out.println("Cliente desconectado");
             }
 
 
