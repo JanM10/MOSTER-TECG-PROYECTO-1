@@ -1,10 +1,9 @@
-import java.io.File;
-import java.io.IOException;
-import org.codehaus.jackson.map.ObjectMapper;
-
-
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.map.ObjectMapper;
+
+import java.io.File;
+import java.io.IOException;
 
 //public class ObjectMapper{
 
@@ -15,7 +14,7 @@ public class App{
         try{
             Datos[] datos = mapper.readValue(new File ("cartas.json"), Datos[].class);
 
-            System.out.println("Nombre:"+datos[5].getNombre());
+            System.out.println("Nombre:"+datos[1].getNombre());
             System.out.println("id:"+datos[1].getId());
             System.out.println("Daño:"+datos[1].getDaño());
             System.out.println("Coste:"+datos[1].getCoste());
