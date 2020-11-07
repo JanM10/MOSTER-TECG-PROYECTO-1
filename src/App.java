@@ -14,12 +14,13 @@ public class App{
         try{
             Datos[] datos = mapper.readValue(new File ("cartas.json"), Datos[].class);
 
-            System.out.println("Nombre:"+datos[1].getNombre());
-            System.out.println("id:"+datos[1].getId());
-            System.out.println("Daño:"+datos[1].getDaño());
-            System.out.println("Coste:"+datos[1].getCoste());
-            System.out.println("Vida:"+datos[1].getVida());
-            System.out.println("Hechizos:"+datos[1].getHechizo());
+            System.out.println("Nombre:"+datos[0].getNombre());
+            System.out.println("id:"+datos[0].getId());
+            System.out.println("Daño:"+datos[0].getDaño());
+            System.out.println("Coste:"+datos[0].getCoste());
+            System.out.println("Vida:"+datos[0].getVida());
+            System.out.println("Hechizos:"+datos[0].getHechizo());
+            System.out.println(datos[0].getFoto());
             System.out.println("------------");
             System.out.println("Nombre:"+datos[2].getNombre());
             System.out.println("id:"+datos[2].getId());

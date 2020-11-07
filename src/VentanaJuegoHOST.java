@@ -1,6 +1,10 @@
+import org.codehaus.jackson.map.ObjectMapper;
+
+import javax.swing.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
-import javax.swing.ImageIcon;
 
 
 public class VentanaJuegoHOST extends javax.swing.JFrame implements Observer {
@@ -8,10 +12,22 @@ public class VentanaJuegoHOST extends javax.swing.JFrame implements Observer {
     /**
      * Creates new form VentanaJuegoHOST
      */
-    int numeroCarta = 1;
-    public VentanaJuegoHOST() {
+    int numeroCarta = 0;
+    int vidaActual = 1000;
+    int manaActual = 200;
+    ObjectMapper obtenerValor = new ObjectMapper();
+    public Datos[] datos = obtenerValor.readValue(new File ("cartas.json"), Datos[].class);
+
+    public VentanaJuegoHOST() throws IOException {
         initComponents();
-        //this.getRootPane().setDefaultButton(this.enviarBoton);
+        txtTexto1.setVisible(false);
+        Datos cartaActual = new Datos();
+        System.out.println(datos[0].getFoto());
+//        ListaCircularDE miMano = new ListaCircularDE();
+//        miMano.insertar_inicio("10");
+//        miMano.instertar_final("20");
+//        System.out.println(miMano.tamano);
+//        miMano.mostrar_elementos();
         Servidor s = new Servidor(5000);
         s.addObserver(this);
         Thread t = new Thread(s);
@@ -35,7 +51,7 @@ public class VentanaJuegoHOST extends javax.swing.JFrame implements Observer {
         jLabel3 = new javax.swing.JLabel();
         mana = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        vida = new javax.swing.JLabel();
+        vida1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtTexto1 = new javax.swing.JTextArea();
         miMano = new javax.swing.JLabel();
@@ -91,8 +107,8 @@ public class VentanaJuegoHOST extends javax.swing.JFrame implements Observer {
         jLabel5.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
         jLabel5.setText("Vida:");
 
-        vida.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
-        vida.setText("1000");
+        vida1.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
+        vida1.setText("1000");
 
         txtTexto1.setEditable(false);
         txtTexto1.setColumns(20);
@@ -244,7 +260,7 @@ public class VentanaJuegoHOST extends javax.swing.JFrame implements Observer {
                                                 .addGap(33, 33, 33)
                                                 .addComponent(jLabel5)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent(vida, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                                .addComponent(vida1, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(layout.createSequentialGroup()
                                         .addGap(589, 589, 589)
@@ -261,7 +277,7 @@ public class VentanaJuegoHOST extends javax.swing.JFrame implements Observer {
                                                         .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                                                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addComponent(vida, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                .addComponent(vida1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                                 .addComponent(mana)
                                                                 .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -320,10 +336,11 @@ public class VentanaJuegoHOST extends javax.swing.JFrame implements Observer {
     private void anteriorBotonActionPerformed(java.awt.event.ActionEvent evt) {
         numeroCarta -= 1;
         System.out.println("EL NUMERO DISMINUYO");
+        miMano.setIcon(new ImageIcon(getClass().getResource("Cartas/" +String.valueOf(datos[numeroCarta].getFoto()))));
         if(numeroCarta == 0){
             numeroCarta = 16;
             System.out.println("EL NUMERO VOLVIO AL PRIMERO");
-            //CAMBIO DE IMAGEN
+            miMano.setIcon(new ImageIcon(getClass().getResource("Cartas/" +String.valueOf(datos[numeroCarta].getFoto()))));
         }
     }
 
@@ -332,17 +349,14 @@ public class VentanaJuegoHOST extends javax.swing.JFrame implements Observer {
      * @param evt
      */
     private void siguenteBotonActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
         numeroCarta += 1;
         System.out.println("EL NUMERO AUMENTO");
-        String numeroCartaString = String.valueOf(numeroCarta);
-        miMano.setIcon(new ImageIcon(getClass().getResource("Cartas/" + numeroCartaString+ ".jpg")));
-        int numeroCartasInt = Integer.parseInt(numeroCartaString);
-        System.out.println(numeroCartasInt);
+        miMano.setIcon(new ImageIcon(getClass().getResource("Cartas/" +String.valueOf(datos[numeroCarta].getFoto()))));
+        System.out.println(numeroCarta);
         if(numeroCarta == 17){
             numeroCarta = 1;
             System.out.println("EL NUMERO VOLVIO AL PRIMERO");
-            //CAMBIO DE IMAGEN
+            miMano.setIcon(new ImageIcon(getClass().getResource("Cartas/" +String.valueOf(datos[numeroCarta].getFoto()))));
         }
 
 
@@ -354,7 +368,9 @@ public class VentanaJuegoHOST extends javax.swing.JFrame implements Observer {
      */
     private void Agregar1ActionPerformed(java.awt.event.ActionEvent evt) {
         miMano.setIcon(new ImageIcon(getClass().getResource("")));
-        carta1.setIcon(new ImageIcon(getClass().getResource("Cartas/1.jpg")));
+        String numeroCartaString = String.valueOf(numeroCarta);
+        carta1.setIcon(new ImageIcon(getClass().getResource("Cartas/" + numeroCartaString+ ".jpg")));
+        int numeroCartasInt = Integer.parseInt(numeroCartaString);
 
     }
 
@@ -364,7 +380,9 @@ public class VentanaJuegoHOST extends javax.swing.JFrame implements Observer {
      */
     private void Agregar2ActionPerformed(java.awt.event.ActionEvent evt) {
         miMano.setIcon(new ImageIcon(getClass().getResource("")));
-        carta2.setIcon(new ImageIcon(getClass().getResource("Cartas/1.jpg")));
+        String numeroCartaString = String.valueOf(numeroCarta);
+        carta2.setIcon(new ImageIcon(getClass().getResource("Cartas/" + numeroCartaString+ ".jpg")));
+        int numeroCartasInt = Integer.parseInt(numeroCartaString);
 
     }
 
@@ -374,7 +392,9 @@ public class VentanaJuegoHOST extends javax.swing.JFrame implements Observer {
      */
     private void Agregar3ActionPerformed(java.awt.event.ActionEvent evt) {
         miMano.setIcon(new ImageIcon(getClass().getResource("")));
-        carta3.setIcon(new ImageIcon(getClass().getResource("Cartas/1.jpg")));
+        String numeroCartaString = String.valueOf(numeroCarta);
+        carta3.setIcon(new ImageIcon(getClass().getResource("Cartas/" + numeroCartaString+ ".jpg")));
+        int numeroCartasInt = Integer.parseInt(numeroCartaString);
     }
 
     /**
@@ -382,8 +402,19 @@ public class VentanaJuegoHOST extends javax.swing.JFrame implements Observer {
      * @param evt
      */
     private void Agregar4ActionPerformed(java.awt.event.ActionEvent evt) {
-        miMano.setIcon(new ImageIcon(getClass().getResource("")));
-        carta4.setIcon(new ImageIcon(getClass().getResource("Cartas/1.jpg")));
+        if(miMano.equals("")){
+            JOptionPane.showMessageDialog(null, "Ya hay un carta en este lugar",
+                    "CAMPO LLENO", JOptionPane.INFORMATION_MESSAGE);
+        }else{
+            String numeroCartaString = String.valueOf(numeroCarta);
+            carta4.setIcon(new ImageIcon(getClass().getResource("Cartas/" + numeroCartaString+ ".jpg")));
+            int numeroCartasInt = Integer.parseInt(numeroCartaString);
+            System.out.println(carta4);
+        }
+//        miMano.setIcon(new ImageIcon(getClass().getResource("")));
+//        String numeroCartaString = String.valueOf(numeroCarta);
+//        carta4.setIcon(new ImageIcon(getClass().getResource("Cartas/" + numeroCartaString+ ".jpg")));
+//        int numeroCartasInt = Integer.parseInt(numeroCartaString);
     }
 
     /**
@@ -392,7 +423,9 @@ public class VentanaJuegoHOST extends javax.swing.JFrame implements Observer {
      */
     private void Agregar5ActionPerformed(java.awt.event.ActionEvent evt) {
         miMano.setIcon(new ImageIcon(getClass().getResource("")));
-        carta5.setIcon(new ImageIcon(getClass().getResource("Cartas/1.jpg")));
+        String numeroCartaString = String.valueOf(numeroCarta);
+        carta5.setIcon(new ImageIcon(getClass().getResource("Cartas/" + numeroCartaString+ ".jpg")));
+        int numeroCartasInt = Integer.parseInt(numeroCartaString);
     }
 
     /**
@@ -400,7 +433,36 @@ public class VentanaJuegoHOST extends javax.swing.JFrame implements Observer {
      * @param evt
      */
     private void sacarCartaActionPerformed(java.awt.event.ActionEvent evt) {
+        quitarVida();
 
+    }
+
+    public void quitarVida() {
+        String restarVida = "QV";
+        this.txtTexto1.append(restarVida);
+        Cliente c = new Cliente(6000, restarVida);
+        Thread t = new Thread(c);
+        t.start();
+//////        int a = Integer.parseInt(vida);
+//////        a -= 100;
+//////        vida2.setText(String.valueOf(a));
+////        if(a == 0){
+////            JOptionPane.showMessageDialog(null, "PERDISTE EL JUEGO", "GAME OVER!", JOptionPane.WARNING_MESSAGE);
+////            getToolkit().beep();
+//        }
+    }
+
+
+    public void manaAlInicio(int manaInicial){
+        int b = Integer.parseInt(String.valueOf(manaInicial));
+        b += 250;
+        if(b > 1000){
+            b = 1000;
+            mana.setText(String.valueOf(b));
+        }
+        if(b < 1000){
+            mana.setText(String.valueOf(b));
+        }
     }
 
     /**
@@ -408,7 +470,7 @@ public class VentanaJuegoHOST extends javax.swing.JFrame implements Observer {
      * @param evt
      */
     private void terminarRondaActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        manaAlInicio(manaActual);
         String mensaje = String.valueOf(numeroCarta);
         this.txtTexto1.append(mensaje);
 
@@ -460,7 +522,11 @@ public class VentanaJuegoHOST extends javax.swing.JFrame implements Observer {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VentanaJuegoHOST().setVisible(true);
+                try {
+                    new VentanaJuegoHOST().setVisible(true);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
@@ -497,7 +563,7 @@ public class VentanaJuegoHOST extends javax.swing.JFrame implements Observer {
     private javax.swing.JButton siguenteBoton;
     private javax.swing.JButton terminarRonda;
     private javax.swing.JTextArea txtTexto1;
-    private javax.swing.JLabel vida;
+    public javax.swing.JLabel vida1;
     // End of variables declaration                   
 
     /**
@@ -507,6 +573,26 @@ public class VentanaJuegoHOST extends javax.swing.JFrame implements Observer {
      */
     @Override
     public void update(Observable o, Object arg) {
+        System.out.println("AQUI ESTA " + arg.toString());
+
+        switch(arg.toString()){
+//            case String.valueOf(datos[numeroCarta].getId()):
+//                enemigo1.setIcon(new ImageIcon(getClass().getResource("Cartas/1.jpg")));
+//                break;
+            case "2":
+                enemigo2.setIcon(new ImageIcon(getClass().getResource("Cartas/2.jpg")));
+                break;
+            case "Z":
+                Agregar1.setEnabled(true);
+                Agregar2.setEnabled(true);
+                Agregar3.setEnabled(true);
+                Agregar4.setEnabled(true);
+                Agregar5.setEnabled(true);
+                break;
+            default:
+                System.out.println("Carta no valida");
+                break;
+        }
         this.txtTexto1.append((String) arg);
     }
 }

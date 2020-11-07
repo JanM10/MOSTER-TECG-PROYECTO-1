@@ -1,3 +1,5 @@
+import java.io.IOException;
+
 public class VentanaInicio extends javax.swing.JFrame {
 
     /**
@@ -23,14 +25,22 @@ public class VentanaInicio extends javax.swing.JFrame {
         botonHost.setText("JUGAR COMO HOST");
         botonHost.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonHostActionPerformed(evt);
+                try {
+                    botonHostActionPerformed(evt);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
         botonCliente.setText("JUGAR COMO CLIENTE");
         botonCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonClienteActionPerformed(evt);
+                try {
+                    botonClienteActionPerformed(evt);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -73,7 +83,7 @@ public class VentanaInicio extends javax.swing.JFrame {
      * Este boton inicia el juego como HOST, abre la ventana VentanaJUegoHost y la hace visible.
      * @param evt
      */
-    private void botonHostActionPerformed(java.awt.event.ActionEvent evt) {
+    private void botonHostActionPerformed(java.awt.event.ActionEvent evt) throws IOException {
         new VentanaJuegoHOST().setVisible(true);
         this.dispose();
     }
@@ -82,7 +92,7 @@ public class VentanaInicio extends javax.swing.JFrame {
      * Este boton inicia el juego como Cliente, abre la ventana VentanaJuegoCliente y la hace visible.
      * @param evt
      */
-    private void botonClienteActionPerformed(java.awt.event.ActionEvent evt) {
+    private void botonClienteActionPerformed(java.awt.event.ActionEvent evt) throws IOException {
         new VentanaJuegoCliente().setVisible(true);
         this.dispose();
     }

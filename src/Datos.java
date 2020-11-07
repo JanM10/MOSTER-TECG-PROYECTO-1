@@ -7,6 +7,7 @@ public class Datos {
     public int hechizo;
     public int cartas;
     public int robar;
+    private String foto;
 
     public int getRobar() {
         return robar;
@@ -70,5 +71,13 @@ public class Datos {
 
     public void setCartas(int cartas) {
         this.cartas = cartas;
+    }
+
+    public void setFoto(String foto){
+        this.foto = foto;
+    }
+
+    public String getFoto() {
+        return foto;
     }
 }
